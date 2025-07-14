@@ -2,18 +2,17 @@
 using UnityEngine;
 namespace CodeBase
 {
-    public class SaveLoadDataService : MonoBehaviour
+    public class SaveLoadDataService<T> where T : IData
     {
-        public PlayerData LoadData()
+        public IData LoadData()
         {
-            var json = File.ReadAllText(Application.persistentDataPath + "/playerData.json");
-            return JsonUtility.FromJson<PlayerData>(json);
+            var json = File.ReadAllText(Application.persistentDataPath + $"/{typeof(T)}.json");
+            return JsonUtility.FromJson<T>(json);
         }
-        public void SaveData(Vector3 playerPosition,int playerHp)
+        public void SaveData(T data)
         {
-            var playerData = new PlayerData(playerPosition,playerHp);
-            var json = JsonUtility.ToJson(playerData,true);
-            File.WriteAllText(Application.persistentDataPath + "/playerData.json",json);
+            var json = JsonUtility.ToJson(data,true);
+            File.WriteAllText(Application.persistentDataPath + $"/{typeof(T).Name}.json",json);
         }
     }
 }
