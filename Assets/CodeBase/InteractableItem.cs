@@ -4,7 +4,7 @@ using UnityEngine;
 public class InteractableItem : MonoBehaviour
 {
     [SerializeField] private Item _item;
-    public IItem GetItem()
+    public ItemBase GetItem()
     {
         return _item;
     }

@@ -15,3 +15,4 @@ MonoBehaviour:
   id: Sword
   icon: {fileID: 21300052, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
   canBeDropped: 0
+  prefab: {fileID: 5475051098011276006, guid: a457d02d5bf10c9459386d5931ca3a94, type: 3}

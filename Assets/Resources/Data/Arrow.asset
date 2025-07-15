@@ -15,3 +15,4 @@ MonoBehaviour:
   id: Arrow
   icon: {fileID: 21300096, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
   canBeDropped: 0
+  prefab: {fileID: 830209003240761726, guid: ebcde7b85f0afbb42983365ec2774818, type: 3}
