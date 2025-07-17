@@ -7,18 +7,19 @@ using Random = UnityEngine.Random;
 public class EnemyAi : MonoBehaviour
 {
     [SerializeField] private Transform[] _points;
+    [SerializeField] private EnemyAnimator _enemyAnimator;
     public Transform _currentPoint;
     private IEnemyState _enemyState;
     public NavMeshAgent _AIAgent;
     public float _zoneOfPlayerChecking;
     public float _zoneOfPlayerLosing;
+    public float _zoneOfPlayerAttacking;
     
     public Transform GetRandomPoint()
     {
         var randomPoint = Random.Range(0, _points.Length);
         return _points[randomPoint];
     }
-
     public bool CheckForPlayer()
     {
         var colliders = Physics.OverlapSphere(transform.position, _zoneOfPlayerChecking);
@@ -32,6 +33,16 @@ public class EnemyAi : MonoBehaviour
             }
             else
                 continue;
+        }
+        return false;
+    }
+    public bool CheckIfCanAttackPlayer()
+    {
+        var colliders = Physics.OverlapSphere(transform.position, _zoneOfPlayerAttacking);
+        foreach (var collider in colliders)
+        {
+            if (collider.gameObject.CompareTag("Player")) return true;
+            else continue;
         }
         return false;
     }
@@ -52,6 +63,8 @@ public class EnemyAi : MonoBehaviour
         Gizmos.DrawSphere(transform.position,_zoneOfPlayerChecking);
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(transform.position,_zoneOfPlayerLosing);
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(transform.position,_zoneOfPlayerAttacking);
     }
 
     public void SwitchState(IEnemyState state)
@@ -76,7 +89,7 @@ public class EnemyAi : MonoBehaviour
 
     private void Awake()
     {
-        _enemyState = new PatrolState(this);
+        _enemyState = new PatrolState(this,_enemyAnimator);
         _enemyState.EnterState();
     }
 }
